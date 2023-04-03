@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { ExternalLink } from 'react-external-link';
 
 const Quotes = () => {
   const [quoteInfo, setQuoteInfo] = useState({});
+  // const { speak } = useSpeechSynthesis();
 
   const getQuote = async () => {
     await fetch("https://api.quotable.io/random")
@@ -51,6 +53,11 @@ const Quotes = () => {
             <button id="new-quote" onClick={getQuote}>
               New Quote
             </button>
+          </div>
+          <div className="link-container">
+            <ExternalLink href="https://github.com/pjmiles/quotes-generator">
+              <p className="ext-link">pjmiles</p>
+            </ExternalLink>
           </div>
         </div>
       </div>
