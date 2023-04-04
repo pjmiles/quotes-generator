@@ -1,23 +1,30 @@
 import { useEffect, useState } from "react";
+import { ExternalLink } from 'react-external-link';
+import axios from "axios";
 
 const Quotes = () => {
   const [quoteInfo, setQuoteInfo] = useState({});
+  const [loading, setLoading] = useState(true)
+
+  const baseURL = 'https://api.quotable.io/random'
 
   const getQuote = async () => {
-    await fetch("https://api.quotable.io/random")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) =>
-        setQuoteInfo({
-          text: data.content,
-          author: data.author,
-        })
-      );
+    try {
+     const fetchData = await axios.get(baseURL)
+     setQuoteInfo({
+        text: fetchData.data.content,
+        author: fetchData.data.author,
+     })
+    } catch(err){
+      console.log(err)
+    }
   };
 
   useEffect(() => {
-    getQuote();
+    setTimeout(() => 
+    setLoading(false),
+    3000)
+    getQuote()
   }, []);
 
   return (
@@ -40,17 +47,22 @@ const Quotes = () => {
                     quoteInfo.text
                   }
                 >
-                  <i class="fab fa-twitter"></i>
+                  <i className="fab fa-twitter"></i>
                 </a>
               </li>
               <li>
-                <i class="fas fa-volume-up"></i>
+                <i className="fas fa-volume-up"></i>
               </li>
             </ul>
 
             <button id="new-quote" onClick={getQuote}>
-              New Quote
+              {loading === false ? 'New Quote' : 'Loading...'}
             </button>
+          </div>
+          <div className="link-container">
+            <ExternalLink href="https://github.com/pjmiles/quotes-generator">
+              <span className="ext-link">pjmiles</span>
+            </ExternalLink>
           </div>
         </div>
       </div>
