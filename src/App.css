@@ -93,9 +93,15 @@ a {
 
 .ext-link {
   color: yellow;
-
+  font-size: 12px;
 }
 
-@media screen {
-  
+.ext-link:hover {
+  color: indianred;
+}
+
+@media only screen and (max-width: 600px) {
+  #quote-box {
+    padding: 20px 20px;
+  }
 }
