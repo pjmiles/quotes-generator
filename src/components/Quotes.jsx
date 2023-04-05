@@ -5,6 +5,7 @@ import axios from "axios";
 const Quotes = () => {
   const [quoteInfo, setQuoteInfo] = useState({});
   const [loading, setLoading] = useState(true)
+  const msg = new SpeechSynthesisUtterance()
 
   const baseURL = 'https://api.quotable.io/random'
 
@@ -15,10 +16,15 @@ const Quotes = () => {
         text: fetchData.data.content,
         author: fetchData.data.author,
      })
-    } catch(err){
+    }catch(err){
       console.log(err)
     }
   };
+
+  const speechHandler = (msg) => {
+    msg.text = quoteInfo.text
+    window.speechSynthesis.speak(msg)
+  }
 
   useEffect(() => {
     setTimeout(() => 
@@ -51,7 +57,7 @@ const Quotes = () => {
                 </a>
               </li>
               <li>
-                <i className="fas fa-volume-up"></i>
+                <i className="fas fa-volume-up" onClick={() => speechHandler(msg)}></i>
               </li>
             </ul>
 
